@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 
-function MysqlTreeProvider()
+function MysqlTreeProvider(pDAO)
 {
     let __onDidChangeTreeData = new vscode.EventEmitter();
     this.onDidChangeTreeData = __onDidChangeTreeData.event;
