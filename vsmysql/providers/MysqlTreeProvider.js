@@ -1,34 +1,47 @@
 const vscode = require('vscode');
+const dao = require('./MysqlDAO');
+const fs = require('fs');
 
-function MysqlTreeProvider(pDAO)
-{
-    let __onDidChangeTreeData = new vscode.EventEmitter();
-    this.onDidChangeTreeData = __onDidChangeTreeData.event;
-
-    this.getChildren = getChildren;
-    this.getTreeItem = getTreeItem;
-    this.refresh = refresh;
+class MysqlTreeProvider {
+    constructor() {
+        this['__onDidChangeTreeData'] = new vscode.EventEmitter();
+        this.onDidChangeTreeData = this['__onDidChangeTreeData'].event;
         
-    function getChildren(element)
-    {
+    }
+
+    getChildren(elemento) {
         var elementos = new Array();
-            for (var i = 0; i < 5; i++)
-            {
-                var elemento = new vscode.TreeItem("Item "+i);
-                elemento.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed;
-                elementos.push(elemento);
-            }
 
-            return elementos;
+        if (!elemento) {
+            //Cria Conexão se possivel e Busca a disponiveis
+        } else if (elemento.contextValue == "db") {
+            //Busca as databases
+        } else if (elemento.contextValue == "table") {
+            //Busca as Tabela
+        } else if (elemento.contextValue == "column") {
+            //Busca as Colunas
+        }
+
+        return elementos;
     }
 
-    function getTreeItem(element) {
-        return element;
+    getTreeItem(elemento) {
+        return elemento;
     }
 
-    function refresh()
+    addConn(user, pass, host, port, charset)
     {
-        __onDidChangeTreeData.fire();
+        let conn = new dao.MysqlDAO(user, pass, host, port, charset);
+        
+    }
+
+    removeConn()
+    {
+
+    }
+
+    refresh() {
+        this['__onDidChangeTreeData'].fire();
     }
 }
 

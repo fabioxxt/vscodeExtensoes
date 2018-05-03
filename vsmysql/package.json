@@ -26,6 +26,11 @@
         "menus": {
             "view/title": [
                 {
+                    "command": "vsMysqlNodes.addConn",
+                    "when": "view == vsMysqlNodes",
+                    "group": "navigation"
+                },
+                {
                     "command": "vsMysqlNodes.refresh",
                     "when": "view == vsMysqlNodes",
                     "group": "navigation"
@@ -34,8 +39,14 @@
         },
         "commands": [
             {
+                "command": "vsMysqlNodes.addConn",
+                "title": "VS MYSQL Adicionar Conexão",
+                "icon": "./resources/light/IconPlus.png"
+            },
+            {
                 "command": "vsMysqlNodes.refresh",
-                "title": "Refresh"
+                "title": "VS MYSQL Atualizar",
+                "icon": "./resources/light/IconRefresh.png"
             }
         ]
     },
