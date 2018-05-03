@@ -16,7 +16,8 @@ function activate(context) {
 
         vscode.window.showInputBox({
             placeHolder: "MYSQL User [ Campo obrigatório ]",
-            value: mysqlUser
+            value: mysqlUser,
+            prompt: "User"
         }).then((value) => {
             if (!value) {
                 vscode.window.showErrorMessage("MYSQL User é obrigatório!");
@@ -25,12 +26,14 @@ function activate(context) {
                 vscode.window.showInputBox({
                     placeHolder: "MYSQL Password [ Campo opcional ]",
                     password: true,
-                    value: mysqlPass
+                    value: mysqlPass,
+                    prompt: "Password"
                 }).then((value) => {
                     mysqlPass = value ? value : null;
                     vscode.window.showInputBox({
                         placeHolder: "MYSQL Host [ Campo obrigatório ]",
-                        value: mysqlHost
+                        value: mysqlHost,
+                        prompt: "Hostname"
                     }).then((value) => {
                         if (!value) {
                             vscode.window.showErrorMessage("MYSQL Host é obrigatório!");
@@ -38,7 +41,8 @@ function activate(context) {
                             mysqlHost = value ? value : null;
                             vscode.window.showInputBox({
                                 placeHolder: "MYSQL Port [ Campo obrigatório ]",
-                                value: mysqlPort
+                                value: mysqlPort,
+                                prompt: "Port"
                             }).then((value) => {
                                 if (!value) {
                                     vscode.window.showErrorMessage("MYSQL Port é obrigatório!");
@@ -46,9 +50,11 @@ function activate(context) {
                                     mysqlPort = value ? value : null;
                                     vscode.window.showInputBox({
                                         placeHolder: "MYSQL Charset [ Campo opcional ]",
-                                        value: mysqlCharset
+                                        value: mysqlCharset,
+                                        prompt: "Charset"
                                     }).then((value) => {
                                         mysqlCharset = value ? value : null;
+                                        __MysqlTreeProvider.addConn(mysqlUser, mysqlPass, mysqlHost, mysqlPort, mysqlCharset);
                                     });
                                 }
                             });
@@ -59,12 +65,17 @@ function activate(context) {
         });
     });
 
+    let command_vsMysqlNodesRemoveConn = vscode.commands.registerCommand('vsMysqlNodes.removeConn', function(){
+
+    });
+
     let command_vsMysqlNodesRefresh = vscode.commands.registerCommand('vsMysqlNodes.refresh', function () {
         __MysqlTreeProvider.refresh();
     });
 
     context.subscriptions.push(vsMysqlNodes);
     context.subscriptions.push(command_vsMysqlNodesAddConn);
+    context.subscriptions.push(command_vsMysqlNodesRemoveConn);
     context.subscriptions.push(command_vsMysqlNodesRefresh);
 }
 exports.activate = activate;
